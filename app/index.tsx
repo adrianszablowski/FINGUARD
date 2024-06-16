@@ -1,9 +1,13 @@
+import { Link } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function Index() {
   return (
-    <View className="font-rbold flex flex-1 justify-center">
-      <Text className="text-2xl">Edit app/index.tsx to edit this screen.</Text>
+    <View className="flex flex-1 items-center justify-center font-rbold">
+      <Text className="text-2xl">FINGUARD</Text>
+      <Link href="/home" className="text-2xl">
+        Go to home
+      </Link>
     </View>
   );
 }
