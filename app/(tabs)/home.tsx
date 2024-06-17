@@ -10,7 +10,7 @@ const Home = () => {
   const months = getThreeMothsFromNow();
 
   return (
-    <SafeAreaView className="flex-1 bg-white p-4">
+    <SafeAreaView className="flex-1 bg-white p-4 pb-0">
       <FlatList
         data={months}
         renderItem={(month) => <UpcomingPaymentsComponent month={month.item} />}
