@@ -1,3 +1,4 @@
+import FormField from "@/components/FormField";
 import React, { useState } from "react";
 import {
   FlatList,
@@ -5,6 +6,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  View,
 } from "react-native";
 
 const Edit = () => {
@@ -17,13 +19,16 @@ const Edit = () => {
     recurrenceEndDate: "",
   });
 
+  console.log(form);
+
   return (
-    <SafeAreaView className="flex-1 bg-white p-4 pb-0">
-      <ScrollView>
-        <TextInput
-          className="border border-red-400"
-          onChangeText={(e) => console.log(e)}
-        ></TextInput>
+    <SafeAreaView className="flex-1 bg-white">
+      <ScrollView className="p-4 pb-0">
+        <Text className="pb-4 font-rbold text-2xl">Add New Payment</Text>
+        <FormField
+          title="Name"
+          handleChangeText={(e: string) => setForm({ ...form, name: e })}
+        />
       </ScrollView>
     </SafeAreaView>
   );
