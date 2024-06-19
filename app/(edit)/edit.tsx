@@ -12,7 +12,7 @@ import {
 const Edit = () => {
   const [form, setForm] = useState({
     name: "",
-    amount: "",
+    amount: 0,
     dueDate: "",
     recurring: false,
     recurrenceInterval: "Monthly",
@@ -28,6 +28,21 @@ const Edit = () => {
         <FormField
           title="Name"
           handleChangeText={(e: string) => setForm({ ...form, name: e })}
+          otherStyles="mb-3"
+          value={form.name}
+        />
+        <FormField
+          title="Amount"
+          handleChangeText={(e: string) => setForm({ ...form, amount: +e })}
+          value={form.amount}
+          keyboardType="numeric"
+          otherStyles="mb-3"
+        />
+        <FormField
+          title="Due Date"
+          handleChangeText={(e: string) => setForm({ ...form, name: e })}
+          value={form.dueDate}
+          otherStyles="mb-3"
         />
       </ScrollView>
     </SafeAreaView>
