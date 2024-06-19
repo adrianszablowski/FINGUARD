@@ -1,4 +1,4 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, KeyboardTypeOptions } from "react-native";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
@@ -8,6 +8,8 @@ type Props = {
   otherStyles?: string;
   handleChangeText: any;
   placeholder?: string;
+  keyboardType?: KeyboardTypeOptions;
+  value: any;
 };
 
 const FormField = ({
@@ -15,19 +17,23 @@ const FormField = ({
   handleChangeText,
   title,
   placeholder,
+  keyboardType,
+  value,
 }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <View className={`space-y-2 ${otherStyles}`}>
+    <View className={`space-y-3 ${otherStyles}`}>
       <Text className="font-rmedium text-lg">{title}</Text>
       <View className="h-12 w-full flex-row items-center rounded-md border border-gray-100 px-2">
         <TextInput
           className="flex-1"
           onChangeText={handleChangeText}
+          value={value}
           placeholder={placeholder}
           placeholderTextColor="#7b7b8b"
           secureTextEntry={title === "Password" && !showPassword}
+          keyboardType={keyboardType ?? "default"}
         ></TextInput>
         {title === "Password" && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
