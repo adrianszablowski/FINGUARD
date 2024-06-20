@@ -1,13 +1,7 @@
-import FormField from "@/components/FormField";
+import CheckboxField from "@/components/form/CheckboxField";
+import FormField from "@/components/form/FormField";
 import React, { useState } from "react";
-import {
-  FlatList,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 
 const Edit = () => {
   const [form, setForm] = useState({
@@ -24,7 +18,7 @@ const Edit = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView className="p-4 pb-0">
-        <Text className="pb-4 font-rbold text-2xl">Add New Payment</Text>
+        <Text className="pb-4 font-rbold text-2xl">Edit Payment</Text>
         <FormField
           title="Name"
           handleChangeText={(e: string) => setForm({ ...form, name: e })}
@@ -43,6 +37,14 @@ const Edit = () => {
           handleChangeText={(e: string) => setForm({ ...form, name: e })}
           value={form.dueDate}
           otherStyles="mb-3"
+        />
+        <CheckboxField
+          title="Is this a recurring payment?"
+          label="Recurring"
+          value={form.recurring}
+          setIsChecked={(e) => {
+            setForm({ ...form, recurring: e as boolean });
+          }}
         />
       </ScrollView>
     </SafeAreaView>
