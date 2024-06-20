@@ -9,6 +9,7 @@ type Props = {
   checkboxStyles?: string;
   value: boolean;
   setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  containerStyles?: string;
 };
 
 const CheckboxField = ({
@@ -18,9 +19,10 @@ const CheckboxField = ({
   checkboxStyles,
   value,
   setIsChecked,
+  containerStyles,
 }: Props) => {
   return (
-    <View className="space-y-1">
+    <View className={`space-y-1 ${containerStyles}`}>
       <Text className="font-rmedium text-lg">{label}</Text>
       <View className="flex-row items-center gap-3">
         <Checkbox
