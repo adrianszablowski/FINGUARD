@@ -1,9 +1,11 @@
 import CheckboxField from "@/components/form/CheckboxField";
+import DatePicker from "@/components/form/DatePicker";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
 import { AntDesign } from "@expo/vector-icons";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, Text } from "react-native";
+import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
 const Edit = () => {
@@ -11,7 +13,7 @@ const Edit = () => {
   const [form, setForm] = useState({
     name: "",
     amount: 0,
-    dueDate: "",
+    dueDate: new Date(),
     recurring: false,
     recurrenceInterval: "",
     recurrenceEndDate: "",
@@ -37,11 +39,10 @@ const Edit = () => {
           keyboardType="numeric"
           otherStyles="mb-3"
         />
-        <FormField
+        <DatePicker
           title="Due Date"
-          handleChangeText={(e: string) => setForm({ ...form, name: e })}
           value={form.dueDate}
-          otherStyles="mb-3"
+          onChange={(e, date) => setForm({ ...form, dueDate: date! })}
         />
         <CheckboxField
           title="Is this a recurring payment?"
@@ -51,7 +52,7 @@ const Edit = () => {
             setForm({ ...form, recurring: e as boolean });
             setShowRecurringForm(e);
           }}
-          containerStyles="mb-5"
+          containerStyles="my-5"
         />
         {showRecurringForm && (
           <>
@@ -92,6 +93,12 @@ const Edit = () => {
               }}
               value={form.recurrenceInterval}
               Icon={() => <AntDesign name="down" size={20} />}
+            />
+            <DatePicker
+              title="Recurrence End Date"
+              value={form.dueDate}
+              onChange={(e, date) => setForm({ ...form, dueDate: date! })}
+              otherStyles="mt-3"
             />
           </>
         )}
