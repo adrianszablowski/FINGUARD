@@ -1,8 +1,9 @@
 import CheckboxField from "@/components/form/CheckboxField";
 import FormField from "@/components/form/FormField";
+import SubmitButton from "@/components/form/SubmitButton";
 import { AntDesign } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
 const Edit = () => {
@@ -94,6 +95,7 @@ const Edit = () => {
             />
           </>
         )}
+        <SubmitButton name="Edit Payment" />
       </ScrollView>
     </SafeAreaView>
   );
