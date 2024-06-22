@@ -11,6 +11,7 @@ type Props = {
   keyboardType?: KeyboardTypeOptions;
   value: any;
   inputStyles?: string;
+  defaultValue?: string;
 };
 
 const FormField = ({
@@ -21,6 +22,7 @@ const FormField = ({
   keyboardType,
   value,
   inputStyles,
+  defaultValue,
 }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -34,6 +36,7 @@ const FormField = ({
           className="flex-1"
           onChangeText={handleChangeText}
           value={value}
+          defaultValue={defaultValue}
           placeholder={placeholder}
           placeholderTextColor="#7b7b8b"
           secureTextEntry={title === "Password" && !showPassword}
