@@ -10,6 +10,7 @@ type Props = {
   placeholder?: string;
   keyboardType?: KeyboardTypeOptions;
   value: any;
+  inputStyles?: string;
 };
 
 const FormField = ({
@@ -19,13 +20,16 @@ const FormField = ({
   placeholder,
   keyboardType,
   value,
+  inputStyles,
 }: Props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <View className={`space-y-3 ${otherStyles}`}>
       <Text className="font-rmedium text-lg">{title}</Text>
-      <View className="h-12 w-full flex-row items-center rounded-md border border-gray-100 px-2">
+      <View
+        className={`h-12 w-full flex-row items-center rounded-md border border-gray-100 px-2 ${inputStyles}`}
+      >
         <TextInput
           className="flex-1"
           onChangeText={handleChangeText}

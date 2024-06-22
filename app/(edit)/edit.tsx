@@ -3,9 +3,8 @@ import DatePicker from "@/components/form/DatePicker";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
 import { AntDesign } from "@expo/vector-icons";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
 const Edit = () => {
@@ -18,9 +17,6 @@ const Edit = () => {
     recurrenceInterval: "",
     recurrenceEndDate: "",
   });
-
-  console.log({ form });
-  console.log({ showRecurringForm });
 
   return (
     <SafeAreaView className="flex-1 bg-white">
