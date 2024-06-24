@@ -25,8 +25,8 @@ const Home = () => {
             <FlatList
               data={data}
               renderItem={(payment) => <PaymentTile payment={payment.item} />}
-              ListHeaderComponent={() => <PaymentsComponent />}
-              // keyExtractor={(payment) => payment.id}
+              ListHeaderComponent={() => <PaymentsComponent payment={data} />}
+              keyExtractor={(payment: Payment) => payment.$id}
             />
             <Text className="pb-4 font-rbold text-2xl">Upcoming Payments</Text>
           </>

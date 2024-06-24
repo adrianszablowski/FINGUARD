@@ -6,8 +6,6 @@ import { format } from "date-fns";
 const PaymentTile = ({ payment }: { payment: Payment }) => {
   const [paid, setPaid] = useState(false);
 
-  console.log(payment);
-
   return (
     <Link href="/edit" asChild>
       <TouchableOpacity className="mb-2 flex flex-row items-center justify-between rounded-md border border-gray-100 bg-white p-4">

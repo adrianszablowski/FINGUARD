@@ -1,4 +1,5 @@
-import { Account, Client, Databases } from "react-native-appwrite";
+import { getDaysInMonth, getMonth, getYear } from "date-fns";
+import { Account, Client, Databases, Query } from "react-native-appwrite";
 
 export const appwrite = {
   endpoint: "https://cloud.appwrite.io/v1",
@@ -20,11 +21,24 @@ const account = new Account(client);
 const databases = new Databases(client);
 
 export const getCurrentMonthPayments = async () => {
+  const year = getYear(new Date());
+  const month = getMonth(new Date()) + 1;
+  const days = getDaysInMonth(new Date()) + 1;
+
   try {
     const response = await databases.listDocuments(
       appwrite.databaseId,
       appwrite.paymentsCollectionId,
+      [
+        Query.greaterThan("dueDate", `${year}-0${month}-01T00:00:00.000+00:00`),
+        Query.lessThan(
+          "dueDate",
+          `${year}-0${month}-${days}T00:00:00.000+00:00`,
+        ),
+      ],
     );
+
+    console.log(days);
 
     return response.documents;
   } catch (error: any) {
