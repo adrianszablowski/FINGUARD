@@ -20,7 +20,7 @@ client
 const account = new Account(client);
 const databases = new Databases(client);
 
-export const getCurrentMonthPayments = async () => {
+export const getCurrentMonthPayments = async (paidIndex: number) => {
   const year = getYear(new Date());
   const month = getMonth(new Date()) + 1;
   const days = getDaysInMonth(new Date()) + 1;
@@ -30,15 +30,17 @@ export const getCurrentMonthPayments = async () => {
       appwrite.databaseId,
       appwrite.paymentsCollectionId,
       [
-        Query.greaterThan("dueDate", `${year}-0${month}-01T00:00:00.000+00:00`),
+        Query.greaterThan(
+          "dueDate",
+          `${year}-${month < 10 && "0"}${month}-01T00:00:00.000+00:00`,
+        ),
         Query.lessThan(
           "dueDate",
-          `${year}-0${month}-${days}T00:00:00.000+00:00`,
+          `${year}-${month < 10 && "0"}${month}-${days}T00:00:00.000+00:00`,
         ),
+        Query.equal("paid", paidIndex === 0 ? true : false),
       ],
     );
-
-    console.log(days);
 
     return response.documents;
   } catch (error: any) {

@@ -1,10 +1,18 @@
 import { months } from "@/constants/months";
 import { AntDesign } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
-const PaymentsComponent = ({ payment }: { payment: Payment[] }) => {
+const PaymentsComponent = ({
+  payment,
+  setPaid,
+  paid,
+}: {
+  payment: Payment[];
+  setPaid: Dispatch<React.SetStateAction<number>>;
+  paid: number;
+}) => {
   const [totalDue, setTotalDue] = useState(0);
 
   useEffect(() => {
@@ -25,10 +33,11 @@ const PaymentsComponent = ({ payment }: { payment: Payment[] }) => {
           <Text className="pr-2">Filter: </Text>
           <RNPickerSelect
             items={[
-              { label: "Paid", value: true },
-              { label: "Unpaid", value: false },
+              { label: "Paid", value: true, key: 0 },
+              { label: "Unpaid", value: false, key: 1 },
             ]}
-            onValueChange={(value, index) => console.log(index)}
+            itemKey={paid}
+            onValueChange={(value, index) => setPaid(index)}
             style={{
               inputIOS: {
                 borderWidth: 1,
@@ -53,7 +62,7 @@ const PaymentsComponent = ({ payment }: { payment: Payment[] }) => {
                 right: 5,
               },
             }}
-            placeholder={{ label: "All" }}
+            placeholder={{}}
             Icon={() => <AntDesign name="down" size={18} />}
           />
         </View>
