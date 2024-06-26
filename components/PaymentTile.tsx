@@ -20,9 +20,7 @@ const PaymentTile = ({ payment }: { payment: Payment }) => {
           )}
         </View>
         <View className="items-end">
-          <Text className="font-rbold">
-            {payment.amount.toFixed(2)} {payment.currency}
-          </Text>
+          <Text className="font-rbold">{payment.amount.toFixed(2)} PLN</Text>
           <TouchableOpacity className="p-2 pr-0" onPress={() => setPaid(!paid)}>
             <Text
               className={`${paid || payment.paid ? "text-green-500" : "text-red-500"}`}
