@@ -1,7 +1,7 @@
-import UpcomingPaymentsComponent from "@/components/CustomMonthButton";
 import EmptyListComponent from "@/components/EmptyListComponent";
 import PaymentTile from "@/components/PaymentTile";
 import PaymentsComponent from "@/components/PaymentsComponent";
+import UpcomingPaymentsComponent from "@/components/UpcomingPaymentsComponent";
 import { getCurrentMonthPayments } from "@/lib/appwrite";
 import { getThreeMothsFromNow } from "@/lib/three-months";
 import useAppwrite from "@/lib/useAppwrite";
@@ -24,7 +24,9 @@ const Home = () => {
     <SafeAreaView className="flex-1 bg-white p-4 pb-0">
       <FlatList
         data={months}
-        renderItem={(month) => <UpcomingPaymentsComponent month={month.item} />}
+        renderItem={(month) => (
+          <UpcomingPaymentsComponent month={month.item} index={month.index} />
+        )}
         keyExtractor={(month) => month.id.toString()}
         ListHeaderComponent={() => (
           <>

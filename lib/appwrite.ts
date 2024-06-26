@@ -47,3 +47,30 @@ export const getCurrentMonthPayments = async (paidIndex: number) => {
     throw new Error(error);
   }
 };
+
+export const getSpecificMonthPayments = async (monthPlus: number) => {
+  const year = getYear(new Date());
+  const month = getMonth(new Date()) + monthPlus;
+  const days = getDaysInMonth(new Date()) + 1;
+
+  try {
+    const response = await databases.listDocuments(
+      appwrite.databaseId,
+      appwrite.paymentsCollectionId,
+      [
+        Query.greaterThan(
+          "dueDate",
+          `${year}-${month < 10 && "0"}${month}-01T00:00:00.000+00:00`,
+        ),
+        Query.lessThan(
+          "dueDate",
+          `${year}-${month < 10 && "0"}${month}-${days}T00:00:00.000+00:00`,
+        ),
+      ],
+    );
+
+    return response.documents;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
