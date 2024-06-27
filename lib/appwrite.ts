@@ -74,3 +74,20 @@ export const getSpecificMonthPayments = async (monthPlus: number) => {
     throw new Error(error);
   }
 };
+
+export const setStatusOfPayment = async (
+  paymentId: string,
+  paidStatus: boolean,
+) => {
+  console.log(paidStatus);
+  try {
+    await databases.updateDocument(
+      appwrite.databaseId,
+      appwrite.paymentsCollectionId,
+      paymentId,
+      { paid: paidStatus },
+    );
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

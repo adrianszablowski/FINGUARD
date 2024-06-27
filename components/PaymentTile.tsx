@@ -1,10 +1,19 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "expo-router";
 import { format } from "date-fns";
+import { setStatusOfPayment } from "@/lib/appwrite";
 
 const PaymentTile = ({ payment }: { payment: Payment }) => {
   const [paid, setPaid] = useState(false);
+
+  const handlePaidStatus = (paidStatus: boolean) => {
+    setStatusOfPayment(payment.$id, paidStatus);
+  };
+
+  useEffect(() => {
+    setPaid(payment.paid);
+  }, [payment.paid]);
 
   return (
     <Link href="/edit" asChild>
@@ -21,11 +30,15 @@ const PaymentTile = ({ payment }: { payment: Payment }) => {
         </View>
         <View className="items-end">
           <Text className="font-rbold">{payment.amount.toFixed(2)} PLN</Text>
-          <TouchableOpacity className="p-2 pr-0" onPress={() => setPaid(!paid)}>
-            <Text
-              className={`${paid || payment.paid ? "text-green-500" : "text-red-500"}`}
-            >
-              {paid || payment.paid ? "Paid" : "Unpaid"}
+          <TouchableOpacity
+            className="p-2 pr-0"
+            onPress={() => {
+              setPaid(!paid);
+              handlePaidStatus(!paid);
+            }}
+          >
+            <Text className={`${paid ? "text-green-500" : "text-red-500"}`}>
+              {paid ? "Paid" : "Unpaid"}
             </Text>
           </TouchableOpacity>
         </View>
