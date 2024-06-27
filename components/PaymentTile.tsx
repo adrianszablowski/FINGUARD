@@ -5,15 +5,11 @@ import { format } from "date-fns";
 import { setStatusOfPayment } from "@/lib/appwrite";
 
 const PaymentTile = ({ payment }: { payment: Payment }) => {
-  const [paid, setPaid] = useState(false);
+  const [paid, setPaid] = useState(payment.paid);
 
   const handlePaidStatus = (paidStatus: boolean) => {
     setStatusOfPayment(payment.$id, paidStatus);
   };
-
-  useEffect(() => {
-    setPaid(payment.paid);
-  }, [payment.paid]);
 
   return (
     <Link href="/edit" asChild>
