@@ -79,7 +79,6 @@ export const setStatusOfPayment = async (
   paymentId: string,
   paidStatus: boolean,
 ) => {
-  console.log(paidStatus);
   try {
     await databases.updateDocument(
       appwrite.databaseId,
