@@ -1,8 +1,8 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Link } from "expo-router";
-import { format } from "date-fns";
 import { setStatusOfPayment } from "@/lib/appwrite";
+import { format } from "date-fns";
+import { Link } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
 const PaymentTile = ({ payment }: { payment: Payment }) => {
   const [paid, setPaid] = useState(payment.paid);
@@ -10,6 +10,10 @@ const PaymentTile = ({ payment }: { payment: Payment }) => {
   const handlePaidStatus = (paidStatus: boolean) => {
     setStatusOfPayment(payment.$id, paidStatus);
   };
+
+  useEffect(() => {
+    setPaid(payment.paid);
+  }, [payment]);
 
   return (
     <Link href="/edit" asChild>
