@@ -36,7 +36,7 @@ const UpcomingPaymentsComponent = ({
         }}
       >
         <Text>{month.name}</Text>
-        <Text>{totalDue} PLN</Text>
+        <Text>{totalDue.toFixed(2)} PLN</Text>
       </TouchableOpacity>
       {isOpen && (
         <FlatList

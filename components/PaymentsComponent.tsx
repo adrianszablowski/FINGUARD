@@ -1,6 +1,6 @@
 import { months } from "@/constants/months";
 import { AntDesign } from "@expo/vector-icons";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
@@ -26,8 +26,7 @@ const PaymentsComponent = ({
       </Text>
       <View className="flex-row items-center justify-between pb-4">
         <Text>
-          Total Due:{" "}
-          <Text className="font-rbold">{totalDue.toFixed(2)} PLN</Text>
+          Total: <Text className="font-rbold">{totalDue.toFixed(2)} PLN</Text>
         </Text>
         <View className="flex-row items-center">
           <Text className="pr-2">Filter: </Text>
