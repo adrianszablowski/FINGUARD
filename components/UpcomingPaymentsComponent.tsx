@@ -18,14 +18,22 @@ const UpcomingPaymentsComponent = ({
   );
 
   useEffect(() => {
-    data.forEach((payment: Payment) => setTotalDue(totalDue + payment.amount));
+    data.forEach((payment: Payment) =>
+      setTotalDue(
+        payment.paid === false ? totalDue + payment.amount : totalDue,
+      ),
+    );
   }, [data]);
 
   return (
     <>
       <TouchableOpacity
         className="mb-2 flex-row items-center justify-between rounded-md border border-gray-100 p-5"
-        onPress={() => setIsOpen(!isOpen)}
+        onPress={() => {
+          setIsOpen(!isOpen);
+          refetch();
+          setTotalDue(0);
+        }}
       >
         <Text>{month.name}</Text>
         <Text>{totalDue} PLN</Text>
@@ -36,8 +44,7 @@ const UpcomingPaymentsComponent = ({
           ListHeaderComponent={<></>}
           renderItem={(payment) => <PaymentTile payment={payment.item} />}
           keyExtractor={(payment: Payment) => payment.$id}
-          onRefresh={() => refetch()}
-          refreshing={isLoading}
+          refreshing={isLoading || isOpen}
         />
       )}
     </>
