@@ -13,5 +13,4 @@ type Payment = {
   recurrenceInterval: string;
   recurring: boolean;
   paid: boolean;
-  currency: string;
 };
