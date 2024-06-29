@@ -1,5 +1,6 @@
 import { getDaysInMonth, getMonth, getYear } from "date-fns";
-import { Account, Client, Databases, Query } from "react-native-appwrite";
+import { router } from "expo-router";
+import { Account, Client, Databases, ID, Query } from "react-native-appwrite";
 
 export const appwrite = {
   endpoint: "https://cloud.appwrite.io/v1",
@@ -86,6 +87,34 @@ export const setStatusOfPayment = async (
       paymentId,
       { paid: paidStatus },
     );
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const createPayment = async (data: CreatePayment) => {
+  try {
+    await databases.createDocument(
+      appwrite.databaseId,
+      appwrite.paymentsCollectionId,
+      ID.unique(),
+      !data.recurring
+        ? {
+            name: data.name,
+            amount: +data.amount,
+            dueDate: data.dueDate,
+          }
+        : {
+            name: data.name,
+            amount: +data.amount,
+            dueDate: data.dueDate,
+            recurring: data.recurring,
+            recurrenceInterval: data.recurrenceInterval,
+            recurrenceEndDate: data.recurrenceEndDate,
+          },
+    );
+
+    router.push("/home");
   } catch (error: any) {
     throw new Error(error);
   }

@@ -19,7 +19,7 @@ const Edit = () => {
   } = useForm({
     defaultValues: {
       name: "",
-      amount: 0,
+      amount: "0",
       dueDate: new Date(),
       recurring: false,
       recurrenceInterval: "",

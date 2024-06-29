@@ -2,6 +2,7 @@ import CheckboxField from "@/components/form/CheckboxField";
 import DatePicker from "@/components/form/DatePicker";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
+import { createPayment } from "@/lib/appwrite";
 import { AntDesign } from "@expo/vector-icons";
 import { toDate } from "date-fns";
 import React, { useEffect, useState } from "react";
@@ -19,7 +20,7 @@ const Create = () => {
   } = useForm({
     defaultValues: {
       name: "",
-      amount: 0,
+      amount: "0",
       dueDate: new Date(),
       recurring: false,
       recurrenceInterval: "",
@@ -27,8 +28,8 @@ const Create = () => {
     },
   });
 
-  const onSubmit = (data: CreatePayment) => {
-    console.log({ data });
+  const onSubmit = async (data: CreatePayment) => {
+    await createPayment(data);
   };
 
   useEffect(() => {
@@ -71,6 +72,7 @@ const Create = () => {
               value={value}
               onBlur={onBlur}
               keyboardType="numeric"
+              placeholder="0"
               otherStyles="mb-3"
             />
           )}

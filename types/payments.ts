@@ -16,7 +16,7 @@ type Payment = {
 };
 
 type CreatePayment = {
-  amount: number;
+  amount: string;
   dueDate: Date;
   name: string;
   recurrenceEndDate: Date;
