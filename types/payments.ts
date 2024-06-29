@@ -14,3 +14,12 @@ type Payment = {
   recurring: boolean;
   paid: boolean;
 };
+
+type CreatePayment = {
+  amount: number;
+  dueDate: Date;
+  name: string;
+  recurrenceEndDate: Date;
+  recurrenceInterval: string;
+  recurring: boolean;
+};

@@ -9,6 +9,7 @@ type Props = {
   checkboxStyles?: string;
   value: boolean;
   setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowRecurringForm?: React.Dispatch<React.SetStateAction<boolean>>;
   containerStyles?: string;
 };
 
@@ -20,6 +21,7 @@ const CheckboxField = ({
   value,
   setIsChecked,
   containerStyles,
+  setShowRecurringForm,
 }: Props) => {
   return (
     <View className={`space-y-1 ${containerStyles}`}>
@@ -27,7 +29,12 @@ const CheckboxField = ({
       <View className="flex-row items-center gap-3">
         <Checkbox
           value={value}
-          onValueChange={setIsChecked}
+          onValueChange={(value) => {
+            if (setShowRecurringForm) {
+              setShowRecurringForm(value);
+            }
+            setIsChecked(value);
+          }}
           color={value ? color : undefined}
           className={`rounded-md ${checkboxStyles}`}
         />

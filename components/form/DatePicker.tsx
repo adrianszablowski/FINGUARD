@@ -8,7 +8,7 @@ type Props = {
   title?: string;
   otherStyles?: string;
   value: Date;
-  onChange?: (event: DateTimePickerEvent, date?: Date | undefined) => void;
+  onChange?: any;
   minimumDate?: Date;
 };
 
@@ -27,9 +27,12 @@ const DatePicker = ({
         style={{
           alignSelf: "flex-start",
         }}
-        display="compact"
+        display="default"
+        mode="date"
         themeVariant="light"
-        onChange={onChange}
+        onChange={(event, selectedDate) => {
+          onChange(selectedDate);
+        }}
         minimumDate={minimumDate}
       />
     </View>

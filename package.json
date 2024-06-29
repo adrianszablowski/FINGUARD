@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
-    "@react-native-community/datetimepicker": "^8.1.1",
+    "@react-native-community/datetimepicker": "8.0.1",
     "@react-navigation/native": "^6.0.2",
     "date-fns": "^3.6.0",
     "expo": "~51.0.14",
@@ -32,6 +32,7 @@
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.52.0",
     "react-native": "0.74.2",
     "react-native-appwrite": "^0.4.0",
     "react-native-gesture-handler": "~2.16.1",
