@@ -2,8 +2,10 @@ import CheckboxField from "@/components/form/CheckboxField";
 import DatePicker from "@/components/form/DatePicker";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
+import { editPayment } from "@/lib/appwrite";
 import { AntDesign } from "@expo/vector-icons";
 import { toDate } from "date-fns";
+import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { SafeAreaView, ScrollView, Text } from "react-native";
@@ -11,6 +13,7 @@ import RNPickerSelect from "react-native-picker-select";
 
 const Edit = () => {
   const [showRecurringForm, setShowRecurringForm] = useState(false);
+  const { id } = useLocalSearchParams();
   const {
     control,
     handleSubmit,
@@ -27,8 +30,8 @@ const Edit = () => {
     },
   });
 
-  const onSubmit = (data: CreatePayment) => {
-    console.log({ data });
+  const onSubmit = async (data: CreatePayment) => {
+    await editPayment(id as string, data);
   };
 
   useEffect(() => {

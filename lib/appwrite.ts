@@ -118,3 +118,33 @@ export const createPayment = async (data: CreatePayment) => {
     throw new Error(error);
   }
 };
+
+export const editPayment = async (documentId: string, data: CreatePayment) => {
+  const convertedAmount = replace(data.amount, /,/g, ".");
+
+  try {
+    await databases.updateDocument(
+      appwrite.databaseId,
+      appwrite.paymentsCollectionId,
+      documentId,
+      !data.recurring
+        ? {
+            name: data.name,
+            amount: +convertedAmount,
+            dueDate: data.dueDate,
+          }
+        : {
+            name: data.name,
+            amount: +convertedAmount,
+            dueDate: data.dueDate,
+            recurring: data.recurring,
+            recurrenceInterval: data.recurrenceInterval,
+            recurrenceEndDate: data.recurrenceEndDate,
+          },
+    );
+
+    router.push("/home");
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

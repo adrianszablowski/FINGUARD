@@ -16,7 +16,7 @@ const PaymentTile = ({ payment }: { payment: Payment }) => {
   }, [payment]);
 
   return (
-    <Link href="/edit" asChild>
+    <Link href={`/edit/${payment.$id}`} asChild>
       <TouchableOpacity className="mb-2 flex flex-row items-center justify-between rounded-md border border-gray-100 bg-white p-4">
         <View className="gap-1">
           <Text className="font-rbold">{payment.name}</Text>
