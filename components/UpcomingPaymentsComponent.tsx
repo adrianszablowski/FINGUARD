@@ -19,8 +19,8 @@ const UpcomingPaymentsComponent = ({
 
   useEffect(() => {
     data.forEach((payment: Payment) =>
-      setTotalDue(
-        payment.paid === false ? totalDue + payment.amount : totalDue,
+      setTotalDue((prev) =>
+        payment.paid === false ? prev + payment.amount : prev,
       ),
     );
   }, [data]);
