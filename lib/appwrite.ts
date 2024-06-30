@@ -1,6 +1,7 @@
 import { getDaysInMonth, getMonth, getYear } from "date-fns";
 import { router } from "expo-router";
 import { Account, Client, Databases, ID, Query } from "react-native-appwrite";
+import { filter } from "lodash";
 
 export const appwrite = {
   endpoint: "https://cloud.appwrite.io/v1",
@@ -52,25 +53,23 @@ export const getCurrentMonthPayments = async (paidIndex: number) => {
 export const getSpecificMonthPayments = async (monthPlus: number) => {
   const year = getYear(new Date());
   const month = getMonth(new Date()) + monthPlus;
-  const days = getDaysInMonth(new Date()) + 1;
 
   try {
     const response = await databases.listDocuments(
       appwrite.databaseId,
       appwrite.paymentsCollectionId,
-      [
-        Query.greaterThan(
-          "dueDate",
-          `${year}-${month < 10 && "0"}${month}-01T00:00:00.000+00:00`,
-        ),
-        Query.lessThan(
-          "dueDate",
-          `${year}-${month < 10 && "0"}${month}-${days}T00:00:00.000+00:00`,
-        ),
-      ],
     );
 
-    return response.documents;
+    const result = filter(response.documents, function (data: Payment) {
+      return (
+        data.dueDate >
+          `${year}-${month < 10 && "0"}${month}-00T00:00:00.000+00:00` &&
+        data.dueDate <
+          `${year}-${month < 10 && "0"}${month}-32T00:00:00.000+00:00`
+      );
+    });
+
+    return result;
   } catch (error: any) {
     throw new Error(error);
   }
