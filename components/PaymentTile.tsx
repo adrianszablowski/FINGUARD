@@ -1,3 +1,4 @@
+import { usePaymentContext } from "@/context/paymentContext";
 import { setStatusOfPayment } from "@/lib/appwrite";
 import { format } from "date-fns";
 import { Link } from "expo-router";
@@ -6,6 +7,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 const PaymentTile = ({ payment }: { payment: Payment }) => {
   const [paid, setPaid] = useState(payment.paid);
+  const { handleSetPayment } = usePaymentContext();
 
   const handlePaidStatus = (paidStatus: boolean) => {
     setStatusOfPayment(payment.$id, paidStatus);
@@ -15,8 +17,16 @@ const PaymentTile = ({ payment }: { payment: Payment }) => {
     setPaid(payment.paid);
   }, [payment]);
 
+  const handleSetPaymentDataToContext = () => {
+    handleSetPayment(payment);
+  };
+
   return (
-    <Link href={`/edit/${payment.$id}`} asChild>
+    <Link
+      href={`/edit/${payment.$id}`}
+      onPress={handleSetPaymentDataToContext}
+      asChild
+    >
       <TouchableOpacity className="mb-2 flex flex-row items-center justify-between rounded-md border border-gray-100 bg-white p-4">
         <View className="gap-1">
           <Text className="font-rbold">{payment.name}</Text>
