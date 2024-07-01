@@ -4,7 +4,7 @@ import PaymentsComponent from "@/components/PaymentsComponent";
 import UpcomingPaymentsComponent from "@/components/UpcomingPaymentsComponent";
 import { getCurrentMonthPayments } from "@/lib/appwrite";
 import { getThreeMothsFromNow } from "@/lib/three-months";
-import useAppwrite from "@/lib/useAppwrite";
+import useAppwrite from "@/hooks/useAppwrite";
 import React, { useEffect, useState } from "react";
 import { FlatList, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

@@ -1,5 +1,5 @@
 import { getSpecificMonthPayments } from "@/lib/appwrite";
-import useAppwrite from "@/lib/useAppwrite";
+import useAppwrite from "@/hooks/useAppwrite";
 import React, { useEffect, useState } from "react";
 import { FlatList, Text, TouchableOpacity } from "react-native";
 import PaymentTile from "./PaymentTile";
