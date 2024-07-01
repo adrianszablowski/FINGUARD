@@ -2,10 +2,12 @@ import CheckboxField from "@/components/form/CheckboxField";
 import DatePicker from "@/components/form/DatePicker";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
+import { usePaymentContext } from "@/context/paymentContext";
 import { editPayment } from "@/lib/appwrite";
 import { AntDesign } from "@expo/vector-icons";
 import { toDate } from "date-fns";
 import { useLocalSearchParams } from "expo-router";
+import { toString } from "lodash";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { SafeAreaView, ScrollView, Text } from "react-native";
@@ -14,6 +16,7 @@ import RNPickerSelect from "react-native-picker-select";
 const Edit = () => {
   const [showRecurringForm, setShowRecurringForm] = useState(false);
   const { id } = useLocalSearchParams();
+  const { payment } = usePaymentContext();
   const {
     control,
     handleSubmit,
@@ -21,12 +24,12 @@ const Edit = () => {
     formState: { errors, isSubmitSuccessful },
   } = useForm({
     defaultValues: {
-      name: "",
-      amount: "0",
-      dueDate: new Date(),
-      recurring: false,
-      recurrenceInterval: "",
-      recurrenceEndDate: new Date(),
+      name: payment?.name ?? "",
+      amount: toString(payment?.amount) ?? "0",
+      dueDate: toDate(payment?.dueDate ?? new Date()),
+      recurring: payment?.recurring ?? false,
+      recurrenceInterval: payment?.recurrenceInterval ?? "",
+      recurrenceEndDate: toDate(payment?.recurrenceEndDate ?? new Date()),
     },
   });
 
