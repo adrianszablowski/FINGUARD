@@ -1,6 +1,6 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
+import React, { useEffect } from "react";
+import { Text, View } from "react-native";
 
 type Props = {
   label?: string;
@@ -23,6 +23,12 @@ const CheckboxField = ({
   containerStyles,
   setShowRecurringForm,
 }: Props) => {
+  useEffect(() => {
+    if (setShowRecurringForm && value) {
+      setShowRecurringForm(value);
+    }
+  }, []);
+
   return (
     <View className={`space-y-1 ${containerStyles}`}>
       <Text className="font-rmedium text-lg">{label}</Text>
