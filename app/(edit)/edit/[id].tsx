@@ -1,5 +1,6 @@
 import CheckboxField from "@/components/form/CheckboxField";
 import DatePicker from "@/components/form/DatePicker";
+import ErrorText from "@/components/form/ErrorText";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
 import { usePaymentContext } from "@/context/paymentContext";
@@ -56,7 +57,7 @@ const Edit = () => {
             control={control}
             name="name"
             rules={{
-              required: true,
+              required: "Name is required.",
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <FormField
@@ -69,13 +70,13 @@ const Edit = () => {
             )}
           />
           {errors.name && (
-            <Text className="text-xs text-red-500">Name is required.</Text>
+            <ErrorText textStyles="mb-2" message={errors.name.message} />
           )}
           <Controller
             control={control}
             name="amount"
             rules={{
-              required: true,
+              required: "Amount is required.",
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <FormField
@@ -89,7 +90,7 @@ const Edit = () => {
             )}
           />
           {errors.amount && (
-            <Text className="text-xs text-red-500">Amount is required.</Text>
+            <ErrorText textStyles="mb-2" message={errors.amount.message} />
           )}
           <Controller
             control={control}
@@ -165,9 +166,10 @@ const Edit = () => {
                 )}
               />
               {errors.recurrenceInterval && (
-                <Text className="text-xs text-red-500">
-                  Recurrence interval is required.
-                </Text>
+                <ErrorText
+                  textStyles="mb-2"
+                  message="Recurrence interval is required."
+                />
               )}
               <Controller
                 control={control}
