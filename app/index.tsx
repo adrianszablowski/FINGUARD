@@ -17,7 +17,7 @@ export default function Index() {
         reach your financial goals.
       </Text>
       <TouchableOpacity className="rounded-md bg-black px-5 py-2">
-        <Link href="/home" className="text-2xl text-white">
+        <Link href="/sign-in" className="text-2xl text-white">
           Log In
         </Link>
       </TouchableOpacity>
