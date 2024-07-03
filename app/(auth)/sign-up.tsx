@@ -1,12 +1,14 @@
 import React from "react";
-import { Text } from "react-native";
+import { Keyboard, Pressable, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUp = () => {
   return (
-    <SafeAreaView>
-      <Text>Register</Text>
-    </SafeAreaView>
+    <Pressable className="flex-1" onPress={Keyboard.dismiss}>
+      <SafeAreaView>
+        <Text>Register</Text>
+      </SafeAreaView>
+    </Pressable>
   );
 };
 
