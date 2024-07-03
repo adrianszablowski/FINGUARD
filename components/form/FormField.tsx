@@ -1,14 +1,12 @@
+import { AntDesign } from "@expo/vector-icons";
+import React, { useState } from "react";
 import {
-  View,
+  KeyboardTypeOptions,
   Text,
   TextInput,
-  KeyboardTypeOptions,
-  TextInputFocusEventData,
-  NativeSyntheticEvent,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import React, { useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { AntDesign } from "@expo/vector-icons";
 
 type Props = {
   title: string;
@@ -49,13 +47,13 @@ const FormField = ({
           secureTextEntry={title === "Password" && !showPassword}
           keyboardType={keyboardType ?? "default"}
           onBlur={onBlur}
-        ></TextInput>
+        />
         {title === "Password" && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             {!showPassword ? (
-              <AntDesign name="down" size={18} />
+              <AntDesign name="eye" size={22} color="black" />
             ) : (
-              <AntDesign name="down" size={18} />
+              <AntDesign name="eye" size={22} color="gray" />
             )}
           </TouchableOpacity>
         )}
