@@ -39,7 +39,7 @@ const FormField = ({
         className={`h-12 w-full flex-row items-center rounded-md border border-gray-100 px-2 ${inputStyles}`}
       >
         <TextInput
-          className="flex-1"
+          className="h-full flex-1"
           onChangeText={handleChangeText}
           value={value}
           placeholder={placeholder}
