@@ -2,6 +2,7 @@ import { getDaysInMonth, getMonth, getYear } from "date-fns";
 import { router } from "expo-router";
 import { Account, Client, Databases, ID, Query } from "react-native-appwrite";
 import { filter, replace } from "lodash";
+import { Alert } from "react-native";
 
 export const appwrite = {
   endpoint: "https://cloud.appwrite.io/v1",
@@ -145,6 +146,21 @@ export const editPayment = async (documentId: string, data: CreatePayment) => {
 
     router.push("/home");
   } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const signUpUser = async (data: SignUpCredentials) => {
+  try {
+    await account.create(ID.unique(), data.email, data.password, data.name);
+
+    router.push("/sign-in");
+    Alert.alert(
+      "Success",
+      "Your account has been successfully created, you can now log in",
+    );
+  } catch (error: any) {
+    Alert.alert("Error", error.message);
     throw new Error(error);
   }
 };
