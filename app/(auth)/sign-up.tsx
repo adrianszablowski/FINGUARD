@@ -1,26 +1,34 @@
 import ErrorText from "@/components/form/ErrorText";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
+import { signUpUser } from "@/lib/appwrite";
 import { Link } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Text, TouchableOpacity } from "react-native";
-import { Image, Keyboard, Pressable, View } from "react-native";
+import { Image, Keyboard, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUp = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitSuccessful },
   } = useForm({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (data: { email: string; password: string }) => {};
+  const onSubmit = async (data: SignUpCredentials) => {
+    await signUpUser(data);
+  };
+
+  useEffect(() => {
+    reset();
+  }, [isSubmitSuccessful]);
 
   return (
     <Pressable className="flex-1" onPress={Keyboard.dismiss}>
@@ -29,8 +37,24 @@ const SignUp = () => {
           source={require("@/assets/images/shield.webp")}
           className="mb-10 h-48 w-48"
         />
-
         <View className="flex w-full">
+          <Controller
+            name="name"
+            control={control}
+            rules={{ required: "Name is required." }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <FormField
+                title="Name"
+                handleChangeText={onChange}
+                value={value}
+                onBlur={onBlur}
+                inputStyles="border-gray-300 mb-1"
+              />
+            )}
+          />
+          {errors.name && (
+            <ErrorText textStyles="mb-2" message={errors.name.message} />
+          )}
           <Controller
             name="email"
             control={control}
