@@ -1,4 +1,5 @@
 import { PaymentContextProvider } from "@/context/paymentContext";
+import { UserContextProvider } from "@/context/userContext";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -25,14 +26,16 @@ export default function RootLayout() {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <PaymentContextProvider>
-      <StatusBar style="dark" />
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="(edit)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      </Stack>
-    </PaymentContextProvider>
+    <UserContextProvider>
+      <PaymentContextProvider>
+        <StatusBar style="dark" />
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(edit)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        </Stack>
+      </PaymentContextProvider>
+    </UserContextProvider>
   );
 }
