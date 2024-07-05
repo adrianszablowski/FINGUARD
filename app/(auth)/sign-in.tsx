@@ -1,11 +1,11 @@
 import ErrorText from "@/components/form/ErrorText";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
+import { getCurrentUser, signInUser } from "@/lib/appwrite";
 import { Link } from "expo-router";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Text, TouchableOpacity } from "react-native";
-import { Image, Keyboard, Pressable, View } from "react-native";
+import { Image, Keyboard, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignIn = () => {
@@ -20,7 +20,16 @@ const SignIn = () => {
     },
   });
 
-  const onSubmit = (data: { email: string; password: string }) => {};
+  const onSubmit = async (data: SignInCredentials) => {
+    try {
+      await signInUser(data);
+      const user = await getCurrentUser();
+
+      console.log(user);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  };
 
   return (
     <Pressable className="flex-1" onPress={Keyboard.dismiss}>
@@ -29,7 +38,6 @@ const SignIn = () => {
           source={require("@/assets/images/shield.webp")}
           className="mb-10 h-48 w-48"
         />
-
         <View className="flex w-full">
           <Controller
             name="email"

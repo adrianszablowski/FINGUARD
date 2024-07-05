@@ -3,3 +3,8 @@ type SignUpCredentials = {
   email: string;
   password: string;
 };
+
+type SignInCredentials = {
+  email: string;
+  password: string;
+};

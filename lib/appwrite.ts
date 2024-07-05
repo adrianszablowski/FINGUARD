@@ -164,3 +164,28 @@ export const signUpUser = async (data: SignUpCredentials) => {
     throw new Error(error);
   }
 };
+
+export const signInUser = async (data: SignInCredentials) => {
+  try {
+    const response = await account.createEmailPasswordSession(
+      data.email,
+      data.password,
+    );
+
+    return response;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const currentAccount = await account.get();
+
+    if (!currentAccount) throw Error;
+
+    return currentAccount;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
