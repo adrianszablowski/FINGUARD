@@ -9,7 +9,7 @@ export const appwrite = {
   platform: "com.codwave.finguard",
   projectId: "6676cfe8001deb09a38e",
   databaseId: "6676d10c001a19ba0541",
-  userCollectionId: "6677fb4200222733be98",
+  usersCollectionId: "6677fb4200222733be98",
   paymentsCollectionId: "6678380c00379fdc9d11",
 };
 
@@ -151,16 +151,33 @@ export const editPayment = async (documentId: string, data: CreatePayment) => {
 };
 
 export const signUpUser = async (data: SignUpCredentials) => {
-  try {
-    await account.create(ID.unique(), data.email, data.password, data.name);
+  const randomID = ID.unique();
 
-    router.push("/sign-in");
-    Alert.alert(
-      "Success",
-      "Your account has been successfully created, you can now log in",
+  try {
+    const newAccount = await account.create(
+      randomID,
+      data.email,
+      data.password,
+      data.username,
     );
+
+    if (!newAccount) throw Error;
+
+    const newUser = await databases.createDocument(
+      appwrite.databaseId,
+      appwrite.usersCollectionId,
+      ID.unique(),
+      {
+        accountId: randomID,
+        username: data.username,
+        email: data.email,
+      },
+    );
+
+    if (!newUser) throw Error;
+
+    return newUser;
   } catch (error: any) {
-    Alert.alert("Error", error.message);
     throw new Error(error);
   }
 };
@@ -178,13 +195,32 @@ export const signInUser = async (data: SignInCredentials) => {
   }
 };
 
-export const getCurrentUser = async () => {
+export const logOut = async () => {
+  try {
+    await account.deleteSession("current");
+
+    Alert.alert("Success", "You've been logged out");
+    router.push("/sign-in");
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const getCurrentUser = async (userId: string) => {
   try {
     const currentAccount = await account.get();
 
     if (!currentAccount) throw Error;
 
-    return currentAccount;
+    const currentLoggedUser = await databases.listDocuments(
+      appwrite.databaseId,
+      appwrite.usersCollectionId,
+      [Query.equal("accountId", userId)],
+    );
+
+    if (!currentAccount) throw Error;
+
+    return currentLoggedUser.documents[0];
   } catch (error: any) {
     throw new Error(error);
   }

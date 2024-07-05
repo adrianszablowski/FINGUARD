@@ -1,22 +1,30 @@
-import { View, Text } from "react-native";
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
 type UserContext = {
-  user: any;
-  handleSetUser: (userData: any) => void;
+  user: User | null;
+  handleSetUser: (userData: User) => void;
+  isLoading: boolean;
+  handleSetLoading: (status: boolean) => void;
 };
 
 export const UserContext = createContext<UserContext | null>(null);
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSetUser = (userData: any) => {
+  const handleSetUser = (userData: User) => {
     setUser(userData);
   };
 
+  const handleSetLoading = (status: boolean) => {
+    setIsLoading(status);
+  };
+
   return (
-    <UserContext.Provider value={{ user, handleSetUser }}>
+    <UserContext.Provider
+      value={{ user, handleSetUser, isLoading, handleSetLoading }}
+    >
       {children}
     </UserContext.Provider>
   );

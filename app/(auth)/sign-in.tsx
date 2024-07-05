@@ -1,14 +1,21 @@
 import ErrorText from "@/components/form/ErrorText";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
+import { useUserContext } from "@/context/userContext";
 import { getCurrentUser, signInUser } from "@/lib/appwrite";
-import { Link } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Image, Keyboard, Pressable, Text, View } from "react-native";
+import { Alert, Image, Keyboard, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignIn = () => {
+  const { user, handleSetUser, handleSetLoading } = useUserContext();
+
+  if (user) {
+    return <Redirect href="/home" />;
+  }
+
   const {
     control,
     handleSubmit,
@@ -21,19 +28,26 @@ const SignIn = () => {
   });
 
   const onSubmit = async (data: SignInCredentials) => {
+    handleSetLoading(true);
+
     try {
-      await signInUser(data);
-      const user = await getCurrentUser();
+      const loggedUser = await signInUser(data);
+      console.log(loggedUser.$id);
+      const user = await getCurrentUser(loggedUser.$id);
+      handleSetUser(user);
 
       console.log(user);
+      router.push("/home");
     } catch (error: any) {
-      throw new Error(error.message);
+      Alert.alert("Error", error.message);
+    } finally {
+      handleSetLoading(false);
     }
   };
 
   return (
     <Pressable className="flex-1" onPress={Keyboard.dismiss}>
-      <SafeAreaView className="justify-sart flex-1 items-center px-4 py-10">
+      <SafeAreaView className="justify-sart relative flex-1 items-center px-4 py-10">
         <Image
           source={require("@/assets/images/shield.webp")}
           className="mb-10 h-48 w-48"

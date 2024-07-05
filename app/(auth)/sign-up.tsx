@@ -1,14 +1,21 @@
 import ErrorText from "@/components/form/ErrorText";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
+import { useUserContext } from "@/context/userContext";
 import { signUpUser } from "@/lib/appwrite";
-import { Link } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Image, Keyboard, Pressable, Text, View } from "react-native";
+import { Alert, Image, Keyboard, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUp = () => {
+  const { user } = useUserContext();
+
+  if (user) {
+    return <Redirect href="/home" />;
+  }
+
   const {
     control,
     handleSubmit,
@@ -16,14 +23,21 @@ const SignUp = () => {
     formState: { errors, isSubmitSuccessful },
   } = useForm({
     defaultValues: {
-      name: "",
+      username: "",
       email: "",
       password: "",
     },
   });
 
   const onSubmit = async (data: SignUpCredentials) => {
-    await signUpUser(data);
+    try {
+      await signUpUser(data);
+
+      router.push("/sign-in");
+      Alert.alert("Success", "Your account has been sucessfully created");
+    } catch (error: any) {
+      Alert.alert("Error", error.message);
+    }
   };
 
   useEffect(() => {
@@ -39,12 +53,12 @@ const SignUp = () => {
         />
         <View className="flex w-full">
           <Controller
-            name="name"
+            name="username"
             control={control}
-            rules={{ required: "Name is required." }}
+            rules={{ required: "Username is required." }}
             render={({ field: { onChange, onBlur, value } }) => (
               <FormField
-                title="Name"
+                title="Username"
                 handleChangeText={onChange}
                 value={value}
                 onBlur={onBlur}
@@ -52,8 +66,8 @@ const SignUp = () => {
               />
             )}
           />
-          {errors.name && (
-            <ErrorText textStyles="mb-2" message={errors.name.message} />
+          {errors.username && (
+            <ErrorText textStyles="mb-2" message={errors.username.message} />
           )}
           <Controller
             name="email"

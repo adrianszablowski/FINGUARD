@@ -1,5 +1,5 @@
 type SignUpCredentials = {
-  name: string;
+  username: string;
   email: string;
   password: string;
 };
@@ -7,4 +7,12 @@ type SignUpCredentials = {
 type SignInCredentials = {
   email: string;
   password: string;
+};
+
+type User = {
+  $collectionId: string;
+  $createdAt: string;
+  $databaseId: string;
+  $id: string;
+  $updatedAt: string;
 };

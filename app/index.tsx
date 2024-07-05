@@ -1,8 +1,16 @@
-import { Link } from "expo-router";
-import { Image, Text, TouchableOpacity } from "react-native";
+import { useUserContext } from "@/context/userContext";
+import { logOut } from "@/lib/appwrite";
+import { Link, Redirect, router } from "expo-router";
+import { Alert, Image, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
+  const { user } = useUserContext();
+
+  if (user) {
+    return <Redirect href="/home" />;
+  }
+
   return (
     <SafeAreaView className="flex flex-1 items-start justify-start gap-5 px-5 py-6 font-rbold">
       <Text className="self-center font-rbold text-2xl">FINGUARD</Text>
@@ -20,6 +28,20 @@ export default function Index() {
         <Link href="/sign-in" className="text-2xl text-white">
           Log In
         </Link>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={async () => {
+          try {
+            await logOut();
+
+            Alert.alert("Success", "You've been logged out");
+            router.push("/sign-in");
+          } catch (error: any) {
+            Alert.alert("Error", error.message);
+          }
+        }}
+      >
+        <Text>Log out</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
