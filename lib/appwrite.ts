@@ -114,7 +114,7 @@ export const createPayment = async (data: CreatePayment) => {
           },
     );
 
-    router.push("/home");
+    router.replace("/home");
   } catch (error: any) {
     throw new Error(error);
   }
@@ -144,7 +144,7 @@ export const editPayment = async (documentId: string, data: CreatePayment) => {
           },
     );
 
-    router.push("/home");
+    router.replace("/home");
   } catch (error: any) {
     throw new Error(error);
   }
@@ -200,7 +200,7 @@ export const logOut = async () => {
     await account.deleteSession("current");
 
     Alert.alert("Success", "You've been logged out");
-    router.push("/sign-in");
+    router.replace("/sign-in");
   } catch (error: any) {
     throw new Error(error);
   }

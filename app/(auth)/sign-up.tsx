@@ -33,7 +33,7 @@ const SignUp = () => {
     try {
       await signUpUser(data);
 
-      router.push("/sign-in");
+      router.replace("/sign-in");
       Alert.alert("Success", "Your account has been sucessfully created");
     } catch (error: any) {
       Alert.alert("Error", error.message);

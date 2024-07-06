@@ -35,7 +35,7 @@ export default function Index() {
             await logOut();
 
             Alert.alert("Success", "You've been logged out");
-            router.push("/sign-in");
+            router.replace("/sign-in");
           } catch (error: any) {
             Alert.alert("Error", error.message);
           }

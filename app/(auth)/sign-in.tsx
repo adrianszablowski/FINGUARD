@@ -4,7 +4,7 @@ import SubmitButton from "@/components/form/SubmitButton";
 import { useUserContext } from "@/context/userContext";
 import { getCurrentUser, signInUser } from "@/lib/appwrite";
 import { Link, Redirect, router } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, Image, Keyboard, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,8 +18,9 @@ const SignIn = () => {
 
   const {
     control,
+    reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful, isSubmitting },
   } = useForm({
     defaultValues: {
       email: "",
@@ -32,18 +33,21 @@ const SignIn = () => {
 
     try {
       const loggedUser = await signInUser(data);
-      console.log(loggedUser.$id);
       const user = await getCurrentUser(loggedUser.$id);
       handleSetUser(user);
 
-      console.log(user);
-      router.push("/home");
+      Alert.alert("Success", `You have logged in successfully!`);
+      router.replace("/home");
     } catch (error: any) {
       Alert.alert("Error", error.message);
     } finally {
       handleSetLoading(false);
     }
   };
+
+  useEffect(() => {
+    reset();
+  }, [isSubmitSuccessful]);
 
   return (
     <Pressable className="flex-1" onPress={Keyboard.dismiss}>
@@ -87,7 +91,11 @@ const SignIn = () => {
           {errors.password && (
             <ErrorText textStyles="mb-2" message={errors.password.message} />
           )}
-          <SubmitButton onPress={handleSubmit(onSubmit)} name="Sign In" />
+          <SubmitButton
+            onPress={handleSubmit(onSubmit)}
+            name="Sign In"
+            disabled={isSubmitting}
+          />
         </View>
         <View className="mt-5 flex-row items-center space-x-1">
           <Text className="text-gray-600">Don't have an account yet?</Text>
