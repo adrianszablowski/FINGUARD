@@ -38,6 +38,8 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         setIsLoading(false);
       }
     };
+
+    fetchUser();
   }, []);
 
   return (

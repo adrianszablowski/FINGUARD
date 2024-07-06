@@ -4,9 +4,11 @@ import { Image, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
-  const { user } = useUserContext();
+  const { loggedIn } = useUserContext();
 
-  if (user) {
+  console.log({ loggedIn });
+
+  if (loggedIn) {
     return <Redirect href="/home" />;
   }
 
