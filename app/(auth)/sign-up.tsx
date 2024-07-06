@@ -10,9 +10,9 @@ import { Alert, Image, Keyboard, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUp = () => {
-  const { user } = useUserContext();
+  const { loggedIn } = useUserContext();
 
-  if (user) {
+  if (loggedIn) {
     return <Redirect href="/home" />;
   }
 

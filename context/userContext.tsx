@@ -1,30 +1,47 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import { getCurrentUser } from "@/lib/appwrite";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type UserContext = {
   user: User | null;
-  handleSetUser: (userData: User) => void;
   isLoading: boolean;
-  handleSetLoading: (status: boolean) => void;
+  loggedIn: boolean;
 };
 
 export const UserContext = createContext<UserContext | null>(null);
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const handleSetUser = (userData: User) => {
-    setUser(userData);
-  };
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await getCurrentUser();
 
-  const handleSetLoading = (status: boolean) => {
-    setIsLoading(status);
-  };
+        if (!user) {
+          setLoggedIn(false);
+          setUser(null);
+        } else {
+          setLoggedIn(true);
+          setUser(user);
+        }
+      } catch (error: any) {
+        throw new Error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  }, []);
 
   return (
-    <UserContext.Provider
-      value={{ user, handleSetUser, isLoading, handleSetLoading }}
-    >
+    <UserContext.Provider value={{ user, isLoading, loggedIn }}>
       {children}
     </UserContext.Provider>
   );

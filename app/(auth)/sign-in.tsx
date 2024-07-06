@@ -10,9 +10,9 @@ import { Alert, Image, Keyboard, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignIn = () => {
-  const { user, handleSetUser, handleSetLoading } = useUserContext();
+  const { loggedIn } = useUserContext();
 
-  if (user) {
+  if (loggedIn) {
     return <Redirect href="/home" />;
   }
 
@@ -29,19 +29,13 @@ const SignIn = () => {
   });
 
   const onSubmit = async (data: SignInCredentials) => {
-    handleSetLoading(true);
-
     try {
-      const loggedUser = await signInUser(data);
-      const user = await getCurrentUser(loggedUser.$id);
-      handleSetUser(user);
+      await signInUser(data);
 
       Alert.alert("Success", `You have logged in successfully!`);
       router.replace("/home");
     } catch (error: any) {
       Alert.alert("Error", error.message);
-    } finally {
-      handleSetLoading(false);
     }
   };
 

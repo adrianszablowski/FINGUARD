@@ -206,7 +206,7 @@ export const logOut = async () => {
   }
 };
 
-export const getCurrentUser = async (userId: string) => {
+export const getCurrentUser = async () => {
   try {
     const currentAccount = await account.get();
 
@@ -215,7 +215,7 @@ export const getCurrentUser = async (userId: string) => {
     const currentLoggedUser = await databases.listDocuments(
       appwrite.databaseId,
       appwrite.usersCollectionId,
-      [Query.equal("accountId", userId)],
+      [Query.equal("accountId", currentAccount.$id)],
     );
 
     if (!currentAccount) throw Error;
