@@ -3,6 +3,7 @@ import DatePicker from "@/components/form/DatePicker";
 import ErrorText from "@/components/form/ErrorText";
 import FormField from "@/components/form/FormField";
 import SubmitButton from "@/components/form/SubmitButton";
+import { RNPStyles } from "@/constants/RNPStyles";
 import { usePaymentContext } from "@/context/paymentContext";
 import { editPayment } from "@/lib/appwrite";
 import { AntDesign } from "@expo/vector-icons";
@@ -18,7 +19,7 @@ import {
   ScrollView,
   Text,
 } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
+import RNPickerSelect, { PickerStyle } from "react-native-picker-select";
 
 const Edit = () => {
   const [showRecurringForm, setShowRecurringForm] = useState(false);
@@ -134,32 +135,7 @@ const Edit = () => {
                       { label: "Annually", value: "annually" },
                     ]}
                     onValueChange={onChange}
-                    style={{
-                      inputIOS: {
-                        borderWidth: 1,
-                        borderColor: "#f3f4f6",
-                        paddingVertical: 10,
-                        paddingHorizontal: 5,
-                        width: "auto",
-                        height: 50,
-                        paddingRight: 30,
-                        borderRadius: 5,
-                      },
-                      inputAndroid: {
-                        borderWidth: 1,
-                        borderColor: "#f3f4f6",
-                        paddingVertical: 10,
-                        paddingHorizontal: 5,
-                        width: "auto",
-                        height: 50,
-                        paddingRight: 30,
-                        borderRadius: 5,
-                      },
-                      iconContainer: {
-                        top: 15,
-                        right: 10,
-                      },
-                    }}
+                    style={RNPStyles as PickerStyle}
                     value={value}
                     Icon={() => <AntDesign name="down" size={20} />}
                   />

@@ -1,8 +1,9 @@
 import { months } from "@/constants/months";
+import { RNPStyles } from "@/constants/RNPStyles";
 import { AntDesign } from "@expo/vector-icons";
 import React, { Dispatch, useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
+import RNPickerSelect, { PickerStyle } from "react-native-picker-select";
 
 const PaymentsComponent = ({
   payment,
@@ -37,30 +38,7 @@ const PaymentsComponent = ({
             ]}
             itemKey={paid}
             onValueChange={(value, index) => setPaid(index)}
-            style={{
-              inputIOS: {
-                borderWidth: 1,
-                borderColor: "#f3f4f6",
-                paddingVertical: 10,
-                paddingHorizontal: 5,
-                width: 100,
-                paddingRight: 30,
-                borderRadius: 5,
-              },
-              inputAndroid: {
-                borderWidth: 1,
-                borderColor: "#f3f4f6",
-                paddingVertical: 10,
-                paddingHorizontal: 5,
-                width: 100,
-                paddingRight: 30,
-                borderRadius: 5,
-              },
-              iconContainer: {
-                top: 10,
-                right: 5,
-              },
-            }}
+            style={RNPStyles as PickerStyle}
             placeholder={{}}
             Icon={() => <AntDesign name="down" size={18} />}
           />
