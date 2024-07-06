@@ -95,6 +95,7 @@ const SignIn = () => {
             onPress={handleSubmit(onSubmit)}
             name="Sign In"
             disabled={isSubmitting}
+            buttonStyles={isSubmitting ? "opacity-50" : "opacity-100"}
           />
         </View>
         <View className="mt-5 flex-row items-center space-x-1">

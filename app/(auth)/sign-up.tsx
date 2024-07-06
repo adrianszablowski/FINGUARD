@@ -20,7 +20,7 @@ const SignUp = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful, isSubmitting },
   } = useForm({
     defaultValues: {
       username: "",
@@ -103,7 +103,12 @@ const SignUp = () => {
           {errors.password && (
             <ErrorText textStyles="mb-2" message={errors.password.message} />
           )}
-          <SubmitButton onPress={handleSubmit(onSubmit)} name="Sign Up" />
+          <SubmitButton
+            onPress={handleSubmit(onSubmit)}
+            name="Sign Up"
+            disabled={isSubmitting}
+            buttonStyles={isSubmitting ? "opacity-50" : "opacity-100"}
+          />
         </View>
         <View className="mt-5 flex-row items-center space-x-1">
           <Text className="text-gray-600">Do you already have an account?</Text>
