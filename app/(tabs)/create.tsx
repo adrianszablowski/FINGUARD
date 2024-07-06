@@ -23,11 +23,11 @@ const Create = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful, isSubmitting },
   } = useForm({
     defaultValues: {
       name: "",
-      amount: "0",
+      amount: "",
       dueDate: new Date(),
       recurring: false,
       recurrenceInterval: "",
@@ -181,7 +181,12 @@ const Create = () => {
               />
             </>
           )}
-          <SubmitButton name="Add Payment" onPress={handleSubmit(onSubmit)} />
+          <SubmitButton
+            name="Add Payment"
+            onPress={handleSubmit(onSubmit)}
+            disabled={isSubmitting}
+            buttonStyles={isSubmitting ? "opacity-50" : "opacity-100"}
+          />
         </ScrollView>
       </SafeAreaView>
     </Pressable>

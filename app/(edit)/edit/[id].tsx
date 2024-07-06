@@ -28,7 +28,7 @@ const Edit = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful, isSubmitting },
   } = useForm({
     defaultValues: {
       name: payment?.name ?? "",
@@ -185,7 +185,12 @@ const Edit = () => {
               />
             </>
           )}
-          <SubmitButton name="Edit Payment" onPress={handleSubmit(onSubmit)} />
+          <SubmitButton
+            name="Edit Payment"
+            onPress={handleSubmit(onSubmit)}
+            disabled={isSubmitting}
+            buttonStyles={isSubmitting ? "opacity-50" : "opacity-100"}
+          />
         </ScrollView>
       </SafeAreaView>
     </Pressable>

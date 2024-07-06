@@ -6,8 +6,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Index() {
   const { loggedIn } = useUserContext();
 
-  console.log({ loggedIn });
-
   if (loggedIn) {
     return <Redirect href="/home" />;
   }

@@ -1,8 +1,8 @@
-import { getDaysInMonth, getMonth, getYear } from "date-fns";
+import { getMonth, getYear } from "date-fns";
 import { router } from "expo-router";
-import { Account, Client, Databases, ID, Query } from "react-native-appwrite";
 import { filter, replace } from "lodash";
 import { Alert } from "react-native";
+import { Account, Client, Databases, ID, Query } from "react-native-appwrite";
 
 export const appwrite = {
   endpoint: "https://cloud.appwrite.io/v1",
