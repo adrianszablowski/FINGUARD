@@ -9,7 +9,7 @@ const RecentTransactions = () => {
       <FlatList
         data={[{}, {}, {}]}
         renderItem={(category) => <RecentTransation />}
-      ></FlatList>
+      />
     </View>
   );
 };
