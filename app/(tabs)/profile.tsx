@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const Profile = () => {
   return (
     <SafeAreaView className="flex-1">
-      <View className="mb-2 h-16 w-screen flex-row items-center justify-between border-b border-b-gray-200 px-4">
+      <View className="h-16 w-screen flex-row items-center justify-between border-b border-b-gray-200 px-4">
         <View>
           <Text className="text-xl font-bold">John Doe</Text>
           <Text className="text-gray-400">Profile</Text>
@@ -22,15 +22,13 @@ const Profile = () => {
             }
           }}
         >
-          <Ionicons name="log-out-outline" size={30} />
+          <Ionicons name="log-out-outline" size={30} color="red" />
         </TouchableOpacity>
       </View>
       <ScrollView>
-        <CustomButtonProfile title="Account" icon="settings" />
-        <CustomButtonProfile title="Account" icon="settings" />
-        <CustomButtonProfile title="Account" icon="settings" />
-        <CustomButtonProfile title="Account" icon="settings" />
-        <CustomButtonProfile title="Account" icon="settings" />
+        <CustomButtonProfile title="Account" icon="person" />
+        <CustomButtonProfile title="Change password" icon="lock-closed" />
+        <CustomButtonProfile title="Settings" icon="settings" />
       </ScrollView>
     </SafeAreaView>
   );
