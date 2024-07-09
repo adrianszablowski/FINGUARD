@@ -4,13 +4,13 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
   title: string;
-  icon?: string;
+  icon: keyof typeof Ionicons.glyphMap;
 };
 
 const CustomButtonProfile = ({ title, icon }: Props) => {
   return (
     <TouchableOpacity className="border-b p-4">
-      {/* <Ionicons name={icon} /> */}
+      <Ionicons name={icon} />
       <Text className="text-lg font-medium">{title}</Text>
     </TouchableOpacity>
   );

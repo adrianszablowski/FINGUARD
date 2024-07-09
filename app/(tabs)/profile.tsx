@@ -26,10 +26,11 @@ const Profile = () => {
         </TouchableOpacity>
       </View>
       <ScrollView>
-        <CustomButtonProfile title="Account" />
-        <CustomButtonProfile title="Account" />
-        <CustomButtonProfile title="Account" />
-        <CustomButtonProfile title="Account" />
+        <CustomButtonProfile title="Account" icon="settings" />
+        <CustomButtonProfile title="Account" icon="settings" />
+        <CustomButtonProfile title="Account" icon="settings" />
+        <CustomButtonProfile title="Account" icon="settings" />
+        <CustomButtonProfile title="Account" icon="settings" />
       </ScrollView>
     </SafeAreaView>
   );
