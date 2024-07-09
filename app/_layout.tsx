@@ -26,16 +26,18 @@ export default function RootLayout() {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <UserContextProvider>
-      <PaymentContextProvider>
-        <StatusBar style="dark" />
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(edit)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        </Stack>
-      </PaymentContextProvider>
-    </UserContextProvider>
+    <>
+      <StatusBar style="dark" />
+      <UserContextProvider>
+        <PaymentContextProvider>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="(edit)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          </Stack>
+        </PaymentContextProvider>
+      </UserContextProvider>
+    </>
   );
 }

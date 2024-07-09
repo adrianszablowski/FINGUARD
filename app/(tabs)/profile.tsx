@@ -1,8 +1,8 @@
-import RecentTransactions from "@/components/profile/RecentTransactions";
+import CustomButtonProfile from "@/components/profile/CustomButtonProfile";
 import { logOut } from "@/lib/appwrite";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Alert, FlatList, Text, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = () => {
@@ -25,20 +25,12 @@ const Profile = () => {
           <Ionicons name="log-out-outline" size={30} />
         </TouchableOpacity>
       </View>
-      <View className="px-4">
-        <FlatList
-          data={[{}, {}, {}]}
-          renderItem={(category) => <Text>hej</Text>}
-          ListHeaderComponent={() => (
-            <>
-              <RecentTransactions />
-              <Text className="pb-4 font-rbold text-2xl">
-                Expense Categories
-              </Text>
-            </>
-          )}
-        />
-      </View>
+      <ScrollView>
+        <CustomButtonProfile title="Account" />
+        <CustomButtonProfile title="Account" />
+        <CustomButtonProfile title="Account" />
+        <CustomButtonProfile title="Account" />
+      </ScrollView>
     </SafeAreaView>
   );
 };
