@@ -1,7 +1,9 @@
 import { getCurrentUser } from "@/lib/appwrite";
 import React, {
   createContext,
+  Dispatch,
   ReactNode,
+  SetStateAction,
   useContext,
   useEffect,
   useState,
@@ -20,25 +22,25 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const user = await getCurrentUser();
+  const fetchUser = async () => {
+    try {
+      const user = await getCurrentUser();
 
-        if (!user) {
-          setLoggedIn(false);
-          setUser(null);
-        } else {
-          setLoggedIn(true);
-          setUser(user);
-        }
-      } catch (error: any) {
-        throw new Error(error);
-      } finally {
-        setIsLoading(false);
+      if (!user) {
+        setLoggedIn(false);
+        setUser(null);
+      } else {
+        setLoggedIn(true);
+        setUser(user);
       }
-    };
+    } catch (error: any) {
+      throw new Error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchUser();
   }, []);
 

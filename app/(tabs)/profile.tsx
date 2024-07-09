@@ -1,16 +1,8 @@
 import RecentTransactions from "@/components/profile/RecentTransactions";
 import { logOut } from "@/lib/appwrite";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import React from "react";
-import {
-  Alert,
-  FlatList,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, FlatList, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Profile = () => {
@@ -25,9 +17,6 @@ const Profile = () => {
           onPress={async () => {
             try {
               await logOut();
-
-              Alert.alert("Success", "You've been logged out");
-              router.replace("/sign-in");
             } catch (error: any) {
               Alert.alert("Error", error.message);
             }
