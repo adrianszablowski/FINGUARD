@@ -1,4 +1,4 @@
-import { getMonth, getYear } from "date-fns";
+import { add, differenceInCalendarMonths, getMonth, getYear } from "date-fns";
 import { router } from "expo-router";
 import { filter, replace } from "lodash";
 import { Alert } from "react-native";
@@ -93,30 +93,73 @@ export const setStatusOfPayment = async (
 export const createPayment = async (data: CreatePayment) => {
   const convertedAmount = replace(data.amount, /,/g, ".");
 
-  try {
-    await databases.createDocument(
-      appwrite.databaseId,
-      appwrite.paymentsCollectionId,
-      ID.unique(),
-      !data.recurring
-        ? {
-            name: data.name,
-            amount: +convertedAmount,
-            dueDate: data.dueDate,
-          }
-        : {
-            name: data.name,
-            amount: +convertedAmount,
-            dueDate: data.dueDate,
-            recurring: data.recurring,
-            recurrenceInterval: data.recurrenceInterval,
-            recurrenceEndDate: data.recurrenceEndDate,
-          },
+  if (data.recurring) {
+    const differenceInMonths = differenceInCalendarMonths(
+      data.recurrenceEndDate,
+      data.dueDate,
     );
 
+    for (let i = 0; i < differenceInMonths; i++) {
+      const dueDateIncrased = add(data.dueDate, {
+        months: i,
+      });
+
+      console.log("miesiac", dueDateIncrased);
+
+      try {
+        await databases.createDocument(
+          appwrite.databaseId,
+          appwrite.paymentsCollectionId,
+          ID.unique(),
+          !data.recurring
+            ? {
+                name: data.name,
+                amount: +convertedAmount,
+                dueDate: dueDateIncrased,
+              }
+            : {
+                name: data.name,
+                amount: +convertedAmount,
+                dueDate: data.dueDate,
+                recurring: data.recurring,
+                recurrenceInterval: data.recurrenceInterval,
+                recurrenceEndDate: data.recurrenceEndDate,
+              },
+        );
+      } catch (error: any) {
+        throw new Error(error);
+      }
+    }
+
     router.replace("/home");
-  } catch (error: any) {
-    throw new Error(error);
+  }
+
+  if (!data.recurring) {
+    try {
+      await databases.createDocument(
+        appwrite.databaseId,
+        appwrite.paymentsCollectionId,
+        ID.unique(),
+        !data.recurring
+          ? {
+              name: data.name,
+              amount: +convertedAmount,
+              dueDate: data.dueDate,
+            }
+          : {
+              name: data.name,
+              amount: +convertedAmount,
+              dueDate: data.dueDate,
+              recurring: data.recurring,
+              recurrenceInterval: data.recurrenceInterval,
+              recurrenceEndDate: data.recurrenceEndDate,
+            },
+      );
+
+      router.replace("/home");
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 };
 
@@ -199,8 +242,8 @@ export const logOut = async () => {
   try {
     await account.deleteSession("current");
 
-    Alert.alert("Success", "You've been logged out");
     router.replace("/sign-in");
+    Alert.alert("Success", "You've been logged out");
   } catch (error: any) {
     throw new Error(error);
   }
