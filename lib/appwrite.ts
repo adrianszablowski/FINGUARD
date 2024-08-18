@@ -90,76 +90,36 @@ export const setStatusOfPayment = async (
   }
 };
 
-export const createPayment = async (data: CreatePayment) => {
+export const createPayment = async (
+  data: CreatePayment,
+  dueDataIcrased?: Date,
+) => {
   const convertedAmount = replace(data.amount, /,/g, ".");
 
-  if (data.recurring) {
-    const differenceInMonths = differenceInCalendarMonths(
-      data.recurrenceEndDate,
-      data.dueDate,
+  try {
+    await databases.createDocument(
+      appwrite.databaseId,
+      appwrite.paymentsCollectionId,
+      ID.unique(),
+      !data.recurring
+        ? {
+            name: data.name,
+            amount: +convertedAmount,
+            dueDate: data.dueDate,
+          }
+        : {
+            name: data.name,
+            amount: +convertedAmount,
+            dueDate: dueDataIcrased ?? data.dueDate,
+            recurring: data.recurring,
+            recurrenceInterval: data.recurrenceInterval,
+            recurrenceEndDate: data.recurrenceEndDate,
+          },
     );
 
-    for (let i = 0; i < differenceInMonths; i++) {
-      const dueDateIncrased = add(data.dueDate, {
-        months: i,
-      });
-
-      console.log("miesiac", dueDateIncrased);
-
-      try {
-        await databases.createDocument(
-          appwrite.databaseId,
-          appwrite.paymentsCollectionId,
-          ID.unique(),
-          !data.recurring
-            ? {
-                name: data.name,
-                amount: +convertedAmount,
-                dueDate: dueDateIncrased,
-              }
-            : {
-                name: data.name,
-                amount: +convertedAmount,
-                dueDate: data.dueDate,
-                recurring: data.recurring,
-                recurrenceInterval: data.recurrenceInterval,
-                recurrenceEndDate: data.recurrenceEndDate,
-              },
-        );
-      } catch (error: any) {
-        throw new Error(error);
-      }
-    }
-
     router.replace("/home");
-  }
-
-  if (!data.recurring) {
-    try {
-      await databases.createDocument(
-        appwrite.databaseId,
-        appwrite.paymentsCollectionId,
-        ID.unique(),
-        !data.recurring
-          ? {
-              name: data.name,
-              amount: +convertedAmount,
-              dueDate: data.dueDate,
-            }
-          : {
-              name: data.name,
-              amount: +convertedAmount,
-              dueDate: data.dueDate,
-              recurring: data.recurring,
-              recurrenceInterval: data.recurrenceInterval,
-              recurrenceEndDate: data.recurrenceEndDate,
-            },
-      );
-
-      router.replace("/home");
-    } catch (error: any) {
-      throw new Error(error);
-    }
+  } catch (error: any) {
+    throw new Error(error);
   }
 };
 

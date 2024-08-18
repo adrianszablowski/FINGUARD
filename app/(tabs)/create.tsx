@@ -6,7 +6,7 @@ import SubmitButton from "@/components/form/SubmitButton";
 import { RNPStyles } from "@/constants/RNPStyles";
 import { createPayment } from "@/lib/appwrite";
 import { AntDesign } from "@expo/vector-icons";
-import { toDate } from "date-fns";
+import { add, differenceInCalendarMonths, toDate } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -37,7 +37,24 @@ const Create = () => {
   });
 
   const onSubmit = async (data: CreatePayment) => {
-    await createPayment(data);
+    if (data.recurring) {
+      const differenceInMonths = differenceInCalendarMonths(
+        data.recurrenceEndDate,
+        data.dueDate,
+      );
+
+      for (let i = 0; i < differenceInMonths; i++) {
+        const dueDateIncrased = add(data.dueDate, {
+          months: i,
+        });
+
+        await createPayment(data, dueDateIncrased);
+      }
+    }
+
+    if (!data.recurring) {
+      await createPayment(data);
+    }
   };
 
   useEffect(() => {
